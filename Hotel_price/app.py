@@ -1,16 +1,21 @@
 
+import os
 import pandas as pd
 import joblib
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 import streamlit as st
 
+# Base directory of this file
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Load the trained models and encoders
-model_name = joblib.load('model_name.joblib')
-model_place = joblib.load('model_place.joblib')
-model_price = joblib.load('model_price.joblib')
-label_encoder_name = joblib.load('label_encoder_name.joblib')
-label_encoder_place = joblib.load('label_encoder_place.joblib')
+model_name = joblib.load(os.path.join(BASE_DIR, 'model_name.joblib'))
+model_place = joblib.load(os.path.join(BASE_DIR, 'model_place.joblib'))
+model_price = joblib.load(os.path.join(BASE_DIR, 'model_price.joblib'))
+
+label_encoder_name = joblib.load(os.path.join(BASE_DIR, 'label_encoder_name.joblib'))
+label_encoder_place = joblib.load(os.path.join(BASE_DIR, 'label_encoder_place.joblib'))
 
 # Define the prediction function
 def predict_hotel(travelCode, userCode, days, price, total):
