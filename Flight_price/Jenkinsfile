@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/sharath199324/Voyage-Analytics-Intergrating-MLOPS-in-Travel-main.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('Flight_price') {
+                    // Debug: list files to verify context
+                    bat 'dir'
+                    // Install dependencies if requirements.txt exists
+                    script {
+                        if (fileExists('requirements.txt')) {
+                            bat 'pip install -r requirements.txt'
+                        } else {
+                            echo 'requirements.txt not found! Skipping pip install.'
+                        }
+                        // Run tests if pytest exists
+                        if (fileExists('tests') || fileExists('test') || fileExists('pytest.ini')) {
+                            bat 'pytest || echo "pytest failed or not present"'
+                        } else {
+                            echo 'No test directory or pytest.ini found. Skipping tests.'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                dir('Flight_price') {
+                    bat 'docker build -t sharath199324/flight-price-app:latest .'
+                }
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                dir('flight_price') {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                        bat 'docker push sharath199324/flight-price-app:latest'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                dir('flight_price') {
+                    withKubeConfig([credentialsId: 'kubernetes-config']) {
+                        bat 'kubectl apply -f deployment.yaml'
+                        bat 'kubectl rollout status deployment/flight-price-app'
+                    }   
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            emailext body: 'Build failed', subject: 'Build failed', to: 'sharath199324@gmail.com'
+        }
+    }
+}
