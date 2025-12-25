@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/0/8c549e8a3bea4fc4aa40cf6066138729/artifacts
+end_time: 1763244424159
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8c549e8a3bea4fc4aa40cf6066138729
+run_name: brawny-stoat-688
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763244199910
+status: 3
+tags: []
+user_id: sharath
