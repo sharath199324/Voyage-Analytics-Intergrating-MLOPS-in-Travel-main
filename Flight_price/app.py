@@ -10,6 +10,8 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 scaler_path = os.getenv('SCALER_PATH')
 rf_path = os.getenv('RF_PATH')
 
+
+
 # Load models once at startup
 scaler_model = pickle.load(open(scaler_path, 'rb'))
 rf_model = pickle.load(open(rf_path, 'rb'))
