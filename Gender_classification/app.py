@@ -17,10 +17,12 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 scaler_path = os.getenv('SCALER_PATH')
 pca_path = os.getenv('PCA_PATH')
 logistic_path = os.getenv('LOGISTIC_PATH')
+#company_encoder_path = os.getenv('company_encoder_path')
 
 scaler_model = pickle.load(open(scaler_path, 'rb'))
 pca_model = pickle.load(open(pca_path, 'rb'))
 logistic_model = pickle.load(open(logistic_path, 'rb'))
+#label_encoder = pickle.load(open(company_encoder_path, 'rb'))
 
 def predict_price(input_data, lr_model, pca, scaler):
     # Prepare the input data
