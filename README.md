@@ -21,14 +21,14 @@ This repository showcases a comprehensive, production-ready MLOps solution tailo
 **MLOps in Travel** is an end-to-end machine learning operations (MLOps) framework tailored for travel industry analytics. The project is structured into three major modules:
 
 - **Flight Price Prediction:** Predicts flight prices using advanced regression models trained on real-world flight data. The module supports experiment tracking, automated retraining, and API-based predictions.
-- **Hotel Price Prediction:** Estimates hotel prices based on historical and contextual features. Includes a dedicated API, deployment scripts, and orchestration pipelines.
+- **Hotel Price Prediction:** Estimates hotel prices based on historical and contextual features.
 - **Gender Classification:** Classifies user gender from structured data, showcasing classification workflows and model serving.
 
 Key highlights include:
 - Modular codebase for easy extensibility and maintenance
 - Automated data pipelines and workflow orchestration with Apache Airflow
 - Experiment tracking and model registry with MLflow
-- Containerized deployment using Docker and Kubernetes
+- Containerized deployment using Docker
 - CI/CD automation with Jenkins
 - Example notebooks for exploratory data analysis (EDA) and model development
 
@@ -65,12 +65,11 @@ mlops_in_travel/
 │   │   │   └── flight_price_dags.py # Airflow DAGs for automated workflow management
 │   │   └── config/
 │   │       └── airflow.cfg        # Airflow configuration
-│   └── templates/
-│       └── index.html             # Web UI template for the flight price app
+|
+price app
 │
 ├── gender_classification/
 │   ├── .env                       # Environment variables for configuration
-│   ├── Dockerfile                 # Containerization for deployment
 │   ├── requirements.txt           # Python dependencies
 │   ├── app.py                     # API/web app for gender classification
 │   ├── gender_classification.ipynb # Model development and experimentation notebook
@@ -78,10 +77,8 @@ mlops_in_travel/
 │
 ├── hotel_price/
 │   ├── .env                       # Environment variables for configuration
-│   ├── Dockerfile                 # Containerization for deployment
 │   ├── requirements.txt           # Python dependencies
-│   ├── app.py                     # API/web app for hotel price prediction
-│   ├── hotel-price-app-deployment.yaml # Kubernetes deployment manifest
+│   ├── app.py                     # API/web app for hotel price manifest
 │   ├── hotel_price_pridiction.ipynb # Model development and experimentation notebook
 │   └── *.joblib / *.pkl           # Serialized trained model artifacts
 │
@@ -115,7 +112,7 @@ This structure ensures clear separation of concerns, scalability, and ease of on
    - Copy `.env.example` to `.env` in each module and fill in required values.
 
 4. **Docker (Recommended):**
-   - Build and run containers for each module:
+   - Build and run container:
    ```bash
    docker build -t flight-price-app ./flight_price
    docker run -p 8000:8000 flight-price-app
@@ -145,8 +142,7 @@ This structure ensures clear separation of concerns, scalability, and ease of on
 - DAGs are located in `dags/` and can be customized for your pipeline.
 
 ## Deployment
-- Dockerfiles provided for all modules.
-- Kubernetes deployment YAML for hotel price app (`hotel_price/hotel-price-app-deployment.yaml`).
+- Dockerfiles provided for Flight_price module.
 - CI/CD example with Jenkins (`flight_price/Jenkinsfile`).
 
 ## Contributing
